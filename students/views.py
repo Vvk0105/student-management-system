@@ -17,6 +17,8 @@ def add(request):
         form=StudentForm(request.POST)
         if form.is_valid():
             form.save()
+            return render(request,'add.html',{'form':StudentForm(),'success':True})
+
         else:
             form=StudentForm()
     return render(request,'add.html',{'form':form})
