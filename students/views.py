@@ -7,9 +7,9 @@ from .forms import StudentForm
 def index(request):
     return render(request,'index.html',{'students':Student.objects.all()})
 
-def view_student(request, id):
-    student=Student.objects.get(pk=id)
-    return HttpResponseRedirect(reverse('index'))
+#def view_student(request, id):
+#    student=Student.objects.get(pk=id)
+#    return HttpResponseRedirect(reverse('index'))
     
 def add(request):
     form=StudentForm()
@@ -23,6 +23,16 @@ def add(request):
             form=StudentForm()
     return render(request,'add.html',{'form':form})
 
+def edit(request,id):
+    instance_to_edit=Student.objects.get(pk=id)
+    if request.POST:
+        form=StudentForm(request.POST,instance=instance_to_edit)
+        if form.is_valid():
+            instance_to_edit.save()
+            return render(request,'edit.html',{'form':form,'success':True})
+    else:
+        form=StudentForm(instance=instance_to_edit)
+    return render(request,'edit.html',{'form':form})
             
 
 #def views_page(request):
