@@ -33,6 +33,11 @@ def edit(request,id):
     else:
         form=StudentForm(instance=instance_to_edit)
     return render(request,'edit.html',{'form':form})
+
+def delete(request,id):
+    instance=Student.objects.get(pk=id)
+    instance.delete()
+    return render(request,'index.html',{'success_message': 'Student deleted successfully'})
             
 
 #def views_page(request):
